@@ -27,3 +27,14 @@ button:disabled{cursor:wait;opacity:.6}.account-main{min-height:calc(100vh - 78p
 .participant-hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% center;border-radius:18px}
 .participant-hero-photo>.participant-icon,.participant-hero-photo>small{display:none}
 @media(max-width:760px){.participant-hero{grid-template-columns:1fr}.participant-hero-photo{display:block;min-height:180px;margin-top:16px}}
+
+/* Participant account top-right actions */
+.participant-header-actions{position:relative;display:flex;align-items:center;gap:12px}
+.participant-header-icon,.participant-header-logout{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:42px;height:42px;padding:0 11px;border:1px solid #d7e6fa;border-radius:12px;background:#f6faff;color:#096bf0;font-weight:700}
+.participant-header-icon:hover,.participant-header-logout:hover{background:#e7f2ff}
+.participant-header-logout{background:#fff3f7;color:#d52e74;border-color:#fbd2e3;padding:0 16px}
+.participant-header-logout:hover{background:#ffe5ef}
+.participant-header-actions .participant-icon{width:21px;height:21px;color:inherit}
+.participant-notification-popover{position:absolute;right:78px;top:calc(100% + 12px);z-index:30;width:min(280px,calc(100vw - 32px));padding:17px 18px;background:#fff;border:1px solid #d7e6fa;box-shadow:0 14px 35px #17335d20;border-radius:14px;color:#325b8d;font-size:13px;text-align:center}
+.participant-notification-popover[hidden]{display:none}
+@media(max-width:520px){.participant-header-actions{gap:6px}.participant-header-icon,.participant-header-logout{min-width:38px;height:38px;padding:0 8px}.participant-header-logout span{display:none}.participant-notification-popover{right:0}.participant-dashboard .auth-header{padding-inline:12px}}
