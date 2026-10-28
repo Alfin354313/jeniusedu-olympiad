@@ -21,3 +21,15 @@ body[data-page="home"] .cta{margin-block:20px 32px}
 .promo:before{content:"";position:absolute;width:140px;height:140px;border:20px solid #ffffff35;border-radius:45%;transform:rotate(25deg);left:-50px;bottom:-90px;z-index:-1}
 @media(max-width:900px){body[data-page="home"] .hero-copy{max-width:60%}body[data-page="home"] .hero-photo{width:55%}}
 @media(max-width:600px){body[data-page="home"] .hero-grid{display:flex;flex-direction:column;min-height:0;padding-bottom:0}body[data-page="home"] .hero-copy{max-width:100%;width:100%;padding-bottom:18px}body[data-page="home"] .hero-photo{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:1.5;mask-image:none;max-width:none;border-radius:16px 16px 0 0}body[data-page="home"] .home-steps article{padding-left:43px;padding-right:8px}body[data-page="home"] .home-steps .step-number{left:5px}}
+
+/* Gambar promosi dan artikel sesuai topik */
+.photo.card-photo{background-image:url('../assets/olympiad-cards.webp');background-size:300% 200%;background-repeat:no-repeat}
+.card-photo-0{background-position:0 0}.card-photo-1{background-position:50% 0}.card-photo-2{background-position:100% 0}
+.card-photo-3{background-position:0 100%}.card-photo-4{background-position:50% 100%}.card-photo-5{background-position:100% 100%}
+.promo{display:block;aspect-ratio:1.9;min-height:0}
+.promo>.card-photo{position:absolute;inset:0;mask-image:none;height:100%;z-index:-1}
+.promo>div:first-child{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:65%;height:100%;padding:18px;background:linear-gradient(90deg,#e1f1fffa,#e7f2ffef 48%,#edf6ff00)}
+.promo h3{font-size:clamp(18px,1.8vw,24px);max-width:190px;text-shadow:0 1px 2px #fff}
+.article-card>.card-photo{aspect-ratio:16/9;background-size:300% 200%}
+.reading>.card-photo{aspect-ratio:16/9}
+@media(max-width:600px){.promo{aspect-ratio:1.85}.promo h3{font-size:24px}.promo>div:first-child{padding:20px;width:68%}}
