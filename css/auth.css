@@ -38,3 +38,18 @@ button:disabled{cursor:wait;opacity:.6}.account-main{min-height:calc(100vh - 78p
 .participant-notification-popover{position:absolute;right:78px;top:calc(100% + 12px);z-index:30;width:min(280px,calc(100vw - 32px));padding:17px 18px;background:#fff;border:1px solid #d7e6fa;box-shadow:0 14px 35px #17335d20;border-radius:14px;color:#325b8d;font-size:13px;text-align:center}
 .participant-notification-popover[hidden]{display:none}
 @media(max-width:520px){.participant-header-actions{gap:6px}.participant-header-icon,.participant-header-logout{min-width:38px;height:38px;padding:0 8px}.participant-header-logout span{display:none}.participant-notification-popover{right:0}.participant-dashboard .auth-header{padding-inline:12px}}
+
+/* Keep participant navigation stationary while the right dashboard scrolls */
+@media(min-width:761px){
+  body.participant-dashboard{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+  .participant-dashboard .auth-header{flex:0 0 auto;position:relative;z-index:20}
+  .participant-dashboard .participant-layout{flex:1 1 auto;height:auto;min-height:0;overflow:hidden;align-items:stretch}
+  .participant-dashboard .participant-sidebar{min-height:0;height:100%;overflow-y:auto;overscroll-behavior:contain}
+  .participant-dashboard .participant-content{height:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+}
+@media(max-width:760px){
+  body.participant-dashboard{height:auto;overflow-x:hidden;overflow-y:auto}
+  .participant-dashboard .participant-layout{height:auto;min-height:calc(100dvh - 78px);overflow:visible}
+  .participant-dashboard .participant-sidebar{position:sticky;top:var(--participant-header-height,70px);z-index:10}
+  .participant-dashboard .participant-content{height:auto;overflow:visible}
+}
