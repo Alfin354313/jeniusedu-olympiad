@@ -19,3 +19,11 @@ button:disabled{cursor:wait;opacity:.6}.account-main{min-height:calc(100vh - 78p
 .participant-explore-art{display:flex;align-items:center;justify-content:center;gap:12px}
 .participant-explore-art .participant-icon{width:56px;height:56px;color:#ed4592}
 .participant-explore-art .participant-icon:last-child{width:30px;height:30px;color:#086ef0}
+
+/* Hero photograph supplied for the participant welcome card */
+.participant-hero{position:relative;isolation:isolate;min-height:265px;grid-template-columns:minmax(0,1.3fr) minmax(250px,.9fr)}
+.participant-hero>div:first-child{position:relative;z-index:2}
+.participant-hero-photo{position:relative;align-self:stretch;min-height:220px;overflow:hidden;border-radius:18px;background:linear-gradient(130deg,#e2f2ff,#ffe5f2)}
+.participant-hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% center;border-radius:18px}
+.participant-hero-photo>.participant-icon,.participant-hero-photo>small{display:none}
+@media(max-width:760px){.participant-hero{grid-template-columns:1fr}.participant-hero-photo{display:block;min-height:180px;margin-top:16px}}
