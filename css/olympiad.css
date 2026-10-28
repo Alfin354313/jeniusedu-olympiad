@@ -2,3 +2,22 @@
 .article-card>.photo{aspect-ratio:1.8;background-size:200% 200%}@media(max-width:600px){.account .outline{display:none}.header-row{gap:8px}.hero-grid{min-width:0}.hero-copy{min-width:0}}
 
 .gateway-card{padding:24px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(125deg,#f0f8ff,#fff6fb);color:var(--navy)}.gateway-card>svg{width:34px;height:34px;color:var(--blue)}.gateway-card h3{font-size:19px;margin:14px 0 8px}.gateway-card p{color:var(--muted);font-size:14px;line-height:1.6}.gateway-card span{color:var(--blue);font-size:13px;font-weight:700}.page-hero h1{max-width:900px}.page-hero+.section{min-height:340px;padding-block:40px}
+
+/* Rangkuman beranda mengikuti ilustrasi */
+body[data-page="home"] .hero-grid{position:relative;min-height:420px;display:flex;align-items:center}
+body[data-page="home"] .hero-photo{position:absolute;inset:0 -4.5vw 0 auto;width:57%;height:100%;aspect-ratio:auto;border-radius:0;box-shadow:none;mask-image:linear-gradient(90deg,transparent,#000 15%);background-size:200% 200%}
+body[data-page="home"] .hero-copy{max-width:55%;width:600px}
+body[data-page="home"] .hero{background:radial-gradient(ellipse at 0 100%,#ffd8ef,transparent 65%),linear-gradient(110deg,#caebff,#edf4ff 65%,#ffe3f2)}
+body[data-page="home"] .hero-copy .eyebrow{display:none}
+body[data-page="home"] .section{padding-block:20px}
+body[data-page="home"] .level summary{display:none}
+.level-link{font-size:12px;font-weight:700;display:inline-block;margin-top:4px}
+body[data-page="home"] .home-steps article{background:transparent;padding-top:14px;text-align:left;padding-left:52px}
+body[data-page="home"] .home-steps article>svg{width:43px;height:43px}
+body[data-page="home"] .home-steps .step-number{left:9px;top:15px}
+body[data-page="home"] .cta{margin-block:20px 32px}
+.promo{isolation:isolate}
+.promo:after{content:"✧";position:absolute;right:12px;top:9px;font-size:27px;color:#fff;pointer-events:none}
+.promo:before{content:"";position:absolute;width:140px;height:140px;border:20px solid #ffffff35;border-radius:45%;transform:rotate(25deg);left:-50px;bottom:-90px;z-index:-1}
+@media(max-width:900px){body[data-page="home"] .hero-copy{max-width:60%}body[data-page="home"] .hero-photo{width:55%}}
+@media(max-width:600px){body[data-page="home"] .hero-grid{display:flex;flex-direction:column;min-height:0;padding-bottom:0}body[data-page="home"] .hero-copy{max-width:100%;width:100%;padding-bottom:18px}body[data-page="home"] .hero-photo{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:1.5;mask-image:none;max-width:none;border-radius:16px 16px 0 0}body[data-page="home"] .home-steps article{padding-left:43px;padding-right:8px}body[data-page="home"] .home-steps .step-number{left:5px}}
