@@ -1,22 +1,17 @@
-# JeniusOlympiad by Jenius Edu
+# Jenius Olympiad by Jenius Edu
 
-Fondasi website publik untuk **JeniusOlympiad**, bagian dari ekosistem Jenius Education.
+Website publik kompetisi akademik SD/SMP/SMA, desain responsif, Blog, Panduan, Pengumuman, dan FAQ.
 
-## Status
+## Akun peserta
+Integrasi Supabase tersedia untuk signup email + konfirmasi, login email, Google OAuth PKCE, lupa/reset sandi, profil peserta dan logout. Aktivasi memerlukan environment Vercel, migrasi SQL, redirect allowlist, dan provider Google. Lihat [panduan aktivasi](docs/participant-auth.md).
 
-Tahap awal: halaman publik responsif dan navigasi dasar. **Belum ada autentikasi, CBT, pembayaran, atau database aktif.** Seluruh data pada halaman adalah placeholder; tidak menampilkan angka peserta atau jadwal fiktif.
+Database dan provider tidak dikonfigurasi otomatis. Halaman akun tetap diblokir jika konfigurasi belum tersedia. Jadwal, kompetisi aktif, pembayaran, dan sistem ujian belum diluncurkan.
 
 ## Struktur
+- js/auth.js, css/auth.css: UI login/daftar
+- js/participant-client.js: koneksi Supabase publik
+- js/participant-account.js: callback, profil, pemulihan sandi
+- api/auth-config.js: environment publik tervalidasi
+- supabase/migrations: tabel profil dan RLS
 
-- `index.html` — halaman publik awal dan bagian menu.
-- `css/style.css` — desain responsif.
-- `js/app.js` — navigasi mobile dan tahun footer.
-- `vercel.json` — konfigurasi deployment statis.
-
-## Arsitektur lanjutan
-
-Website ini melayani peserta/publik. Semua administrasi akan dikembangkan terpusat di **Panel Pengelola** pada repository `Alfin354313/panel-baru`. Integrasi menggunakan API backend aman, tanpa mengekspos kunci layanan ke browser.
-
-## Pengembangan
-
-Branch `feature/initial-site-structure` untuk review/preview sebelum merge ke `main`.
+Preview harus diuji sebelum merge ke main. Pengelolaan kompetisi akan dikembangkan melalui panel pengelola.
