@@ -77,3 +77,43 @@ body[data-page="home"] .cta{margin-block:20px 32px}
 .competition-dialog-note{background:#f1f7ff;border-radius:10px;padding:16px;font-size:14px;line-height:1.7;margin:15px 0 20px;color:#456891}
 @media(max-width:900px){.competition-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.competition-help{flex-wrap:wrap}.competition-help .btn{margin-left:0}.competition-hero-inner>div:first-child{width:65%}}
 @media(max-width:600px){.competition-hero-inner{display:flex;flex-direction:column;min-height:0}.competition-hero-inner>div:first-child{width:100%;padding:32px 0 16px}.competition-hero-photo{position:relative;inset:auto;width:100%;height:190px;mask-image:none;border-radius:15px 15px 0 0;background-position:center 40%}.competition-hero p{font-size:15px}.competition-grid{grid-template-columns:1fr}.competition-card-body{padding:17px}.competition-help{padding:20px;gap:14px}.competition-help>svg{width:44px;height:44px}.competition-help h3{font-size:18px}.competition-filters{gap:8px}.competition-filters button{padding:9px 15px}}
+
+/* Halaman Jadwal Olympiad */
+.schedule-hero{overflow:hidden;background:linear-gradient(115deg,#ffeaf6,#e4f1ff 70%)}
+.schedule-hero-inner{position:relative;display:flex;align-items:center;min-height:355px}
+.schedule-hero-inner>div:first-child{position:relative;z-index:1;width:56%;padding:38px 0}
+.schedule-hero h1{font-size:clamp(32px,3.7vw,49px)}
+.schedule-hero p{font-size:18px;line-height:1.6;max-width:460px;color:#536d97}
+.schedule-hero-photo{position:absolute;inset:0 -5vw 0 auto;width:58%;background:url('../assets/jadwal-hero.webp') center/cover;mask-image:linear-gradient(90deg,transparent,#000 27%)}
+.schedule-content{padding-block:28px 45px}
+.schedule-search{max-width:900px;margin:auto;display:flex;align-items:center;gap:12px;padding:0 18px;border:1px solid #cfdef3;border-radius:13px;box-shadow:0 7px 20px #174b8608}
+.schedule-search>svg{width:21px;height:21px;color:#6484ad}
+.schedule-search input[type=search]{border:0;background:transparent;min-width:0}
+.schedule-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:18px 0 35px}
+.schedule-filters button{border:1px solid #cddff6;border-radius:25px;padding:9px 21px;background:white;color:#315784;font-size:13px}
+.schedule-filters button.selected{background:#096bf0;color:#fff;border-color:#096bf0}
+.schedule-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px}
+.schedule-empty,.schedule-calendar{border:1px solid var(--line);border-radius:15px;background:white}
+.schedule-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:26px;text-align:center;min-height:470px}
+.schedule-empty img{width:min(380px,90%);height:auto;aspect-ratio:1.5;object-fit:contain}
+.schedule-empty h3{font-size:22px;letter-spacing:-.02em;margin:14px 0 10px}
+.schedule-empty p{font-size:15px;line-height:1.7;max-width:430px;color:var(--muted);margin:0 0 23px}
+.schedule-empty a{font-size:14px;font-weight:650}
+.schedule-calendar{padding:24px;display:flex;flex-direction:column;min-width:0}
+.schedule-calendar>h3{font-size:20px;margin:0 0 23px}
+.schedule-month{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}
+.schedule-month button{border:1px solid var(--line);border-radius:9px;background:#fff;width:37px;height:37px;color:#0b397d;font-size:24px;line-height:1}
+.schedule-month strong{font-size:17px}
+#scheduleCalendarGrid{width:100%}
+.schedule-calendar table{width:100%;table-layout:fixed;border-collapse:collapse;text-align:center}
+.schedule-calendar th{font-size:12px;color:#6c84a7;font-weight:500;padding:13px 0}
+.schedule-calendar td{font-size:14px;color:#244470;height:43px;padding:0}
+.schedule-calendar-note{border-top:1px solid var(--line);padding-top:22px;margin:22px 0 0;display:flex;flex-direction:column;align-items:center;gap:9px;color:#738aa9;font-size:12px}
+.schedule-calendar-note svg{width:24px;height:24px}
+.schedule-help{display:flex;align-items:center;gap:23px;padding:25px;background:linear-gradient(110deg,#dff3ff,#fff0f9);border-radius:15px;margin-top:22px}
+.schedule-help>svg{width:55px;height:55px;color:#0b6eed}
+.schedule-help h3{font-size:19px;margin:0 0 7px}
+.schedule-help p{font-size:14px;line-height:1.6;color:var(--muted);margin:0}
+.schedule-help .btn{margin-left:auto;white-space:nowrap}
+@media(max-width:900px){.schedule-hero-inner>div:first-child{width:63%}.schedule-calendar{padding:18px}.schedule-month strong{font-size:15px}.schedule-help{flex-wrap:wrap}.schedule-help .btn{margin-left:0}}
+@media(max-width:650px){.schedule-layout{grid-template-columns:1fr}.schedule-hero-inner{flex-direction:column;min-height:0}.schedule-hero-inner>div:first-child{width:100%;padding:30px 0 12px}.schedule-hero-photo{position:relative;inset:auto;width:100%;height:190px;mask-image:none;border-radius:16px 16px 0 0}.schedule-hero p{font-size:15px}.schedule-empty{min-height:340px;padding:20px}.schedule-empty img{width:270px;max-width:90%}.schedule-empty h3{font-size:20px}.schedule-calendar{padding:22px}.schedule-calendar td{height:43px}.schedule-help{padding:20px;gap:15px}.schedule-help>svg{width:38px;height:38px}.schedule-help h3{font-size:18px}}
