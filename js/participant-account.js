@@ -1,5 +1,6 @@
+import {clearPractice} from './practice-data.js?v=1';
 import {clearUserDrafts} from './competition-drafts.js?v=1';
-import {mountCompetitionAccount} from './competition-account.js?v=3';
+import {mountCompetitionAccount} from './competition-account.js?v=4';
 
 import {getClient,callbackUrl,message} from './participant-client.js';
 const root=document.querySelector('#accountContent'),mode=document.body.dataset.account;
@@ -23,6 +24,8 @@ const panelRoot=document.createElement('section');panelRoot.id='competitionArea'
 const arenaIcon='<svg class="participant-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 3h10v8a5 5 0 0 1-10 0V3ZM7 5H4v4a4 4 0 0 0 4 4m9-8h3v4a4 4 0 0 1-4 4M12 16v5m-4 0h8"/></svg>';
 const journey='<ol class="arena-journey" aria-label="Alur mengikuti kompetisi">'+['Lengkapi profil','Pilih kompetisi','Ikuti ketentuan pendaftaran','Ikuti ujian','Pantau hasil'].map((title,i)=>'<li><span>'+String(i+1).padStart(2,'0')+'</span><strong>'+title+'</strong></li>').join('')+'</ol>';
 const panelInfo={
+practice:['Simulasi Gratis','Kenali ruang ujian','Latihan belum dimuat','Coba ruang latihan gratis.','Buka Simulasi','simulasi.html'],
+help:['Pusat Bantuan','Panduan peserta','Panduan belum dimuat','Muat ulang untuk membuka bantuan.','FAQ','faq.html'],
 tickets:['Kartu Peserta','Identitas keikutsertaan','Kartu belum tersedia','Kartu dapat dicetak setelah pendaftaran aktif.','Kompetisi Saya','peserta.html#kompetisi-saya'],
 my:['Kompetisi Saya','Pusat perjalanan kompetisimu','Data kompetisi belum terhubung','Pendaftaran dan status keikutsertaan akan ditampilkan setelah layanan kompetisi terhubung. Membuat akun belum berarti terdaftar dalam lomba.','Jelajahi Kompetisi','kompetisi.html'],
 schedule:['Jadwal & Ujian','Siap saat tantangan dimulai','Belum ada sesi ujian tersedia','Jadwal dan akses ruang ujian akan mengikuti kompetisi yang kamu ikuti. Saat ini belum ada sesi yang dapat dimulai dari akun ini.','Lihat Jadwal Publik','jadwal.html'],
@@ -30,11 +33,11 @@ awards:['Hasil & Penghargaan','Apresiasi untuk setiap perjuangan','Belum ada has
 announcements:['Pengumuman','Informasi resmi untuk peserta','Pantau informasi penyelenggara','Pembukaan pendaftaran, perubahan jadwal, dan pengumuman hasil tersedia pada halaman pengumuman publik. Notifikasi khusus akun belum terhubung.','Buka Pengumuman','pengumuman.html']};
 const dashboardIntro=document.createElement('section');dashboardIntro.className='arena-dashboard-guide';dashboardIntro.innerHTML='<div><span class="arena-kicker">PERJALANAN KOMPETISI</span><h2>Persiapan yang baik dimulai dari sini.</h2><p>Lengkapi profilmu sambil menunggu kompetisi resmi dibuka.</p></div>'+journey+'<a class="participant-button" href="#profil" data-open-profile>Lengkapi Profil →</a>';root.insertBefore(dashboardIntro,document.querySelector('#dashboardPanels'));
 dashboardIntro.querySelector('[data-open-profile]').addEventListener('click',e=>{e.preventDefault();navigate('profile')});
-const hashes={catalogue:'kompetisi',dashboard:'dashboard',my:'kompetisi-saya',schedule:'jadwal',awards:'hasil',announcements:'pengumuman',tickets:'kartu-peserta',profile:'profil'};
+const hashes={catalogue:'kompetisi',dashboard:'dashboard',my:'kompetisi-saya',schedule:'jadwal',awards:'hasil',announcements:'pengumuman',tickets:'kartu-peserta',practice:'simulasi',help:'bantuan',profile:'profil'};
 function navigate(panel,updateHash=true){
  if(panel!=='catalogue'&&panel!=='dashboard'&&panel!=='profile'&&!panelInfo[panel])panel='dashboard';
  document.querySelectorAll('[data-panel]').forEach(link=>{const selected=link.dataset.panel===panel;link.classList.toggle('is-active',selected);if(selected)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current')});
- const home=panel==='dashboard';document.querySelector('.participant-hero').hidden=!home;document.querySelector('.participant-stats').hidden=!home;dashboardIntro.hidden=!home;document.querySelector('#dashboardPanels').hidden=!home;document.querySelector('#profilePanel').hidden=panel!=='profile';panelRoot.hidden=home||panel==='profile';
+ const home=panel==='dashboard';const reminders=root.querySelector('#joAccountReminders');if(reminders)reminders.hidden=!home;document.querySelector('.participant-hero').hidden=!home;document.querySelector('.participant-stats').hidden=!home;dashboardIntro.hidden=!home;document.querySelector('#dashboardPanels').hidden=!home;document.querySelector('#profilePanel').hidden=panel!=='profile';panelRoot.hidden=home||panel==='profile';
  if(panelInfo[panel]){const [title,sub,empty,description,cta,url]=panelInfo[panel];panelRoot.innerHTML='<div class="arena-page-heading"><span class="arena-kicker">JENIUS OLYMPIAD · AKUN PESERTA</span><h1>'+title+'</h1><p>'+sub+'</p></div>'+(panel==='my'?journey:'')+'<article class="participant-panel arena-empty-panel"><span class="arena-emblem">'+arenaIcon+'</span><span class="arena-state">Layanan sedang disiapkan</span><h2>'+empty+'</h2><p>'+description+'</p><a class="participant-button" href="'+url+'">'+cta+' →</a></article>';}
  competitionLifecycle?.render(panel);showStatus('');if(updateHash&&location.hash!=='#'+hashes[panel])location.hash=hashes[panel];root.scrollTop=0;
 }
@@ -47,8 +50,8 @@ document.querySelector('#name').value=profile?.full_name||user.user_metadata?.fu
 document.querySelector('#profileForm').addEventListener('submit',async e=>{e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;try{const {error}=await c.from('olympiad_participant_profiles').upsert({id:user.id,full_name:document.querySelector('#name').value.trim(),school_level:document.querySelector('#level').value},{onConflict:'id'});if(error)throw Error('Profil belum tersimpan. Periksa koneksi atau hubungi pengelola.');showStatus('Profil peserta berhasil disimpan.')}catch(err){showStatus(message(err))}finally{b.disabled=false}});
 const profileShortcut=document.querySelector('#participantProfileShortcut');if(profileShortcut)profileShortcut.addEventListener('click',()=>document.querySelector('[data-panel="profile"]')?.click());
 const notificationButton=document.querySelector('#participantNotifications'),notificationPanel=document.querySelector('#participantNotificationPanel');if(notificationButton&&notificationPanel){notificationButton.addEventListener('click',()=>{notificationPanel.hidden=!notificationPanel.hidden;notificationButton.setAttribute('aria-expanded',String(!notificationPanel.hidden))});document.addEventListener('click',event=>{if(!notificationButton.contains(event.target)&&!notificationPanel.contains(event.target)){notificationPanel.hidden=true;notificationButton.setAttribute('aria-expanded','false')}})}
-document.querySelector('#signOut').addEventListener('click',async()=>{const {error}=await c.auth.signOut();if(error){showStatus(message(error));return}try{clearUserDrafts(window.localStorage,user.id);}catch{}location.replace('login.html')});
-c.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){try{clearUserDrafts(window.localStorage,user.id);}catch{}location.replace('login.html')}});
+document.querySelector('#signOut').addEventListener('click',async()=>{const {error}=await c.auth.signOut();if(error){showStatus(message(error));return}try{clearUserDrafts(window.localStorage,user.id);clearPractice(window.localStorage,user.id);}catch{}location.replace('login.html')});
+c.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){try{clearUserDrafts(window.localStorage,user.id);clearPractice(window.localStorage,user.id);}catch{}location.replace('login.html')}});
 competitionLifecycle=await mountCompetitionAccount({client:c,user,root,panelRoot,navigate});
 if(sessionStorage.getItem('joCompetitionIntent')&&!location.hash)navigate('catalogue');else restorePanel();
 }catch(e){render('Layanan akun belum tersedia','<p>Konfigurasi autentikasi perlu dilengkapi oleh pengelola.</p><a href="login.html">Kembali ke Masuk</a>');showStatus(message(e))}})();

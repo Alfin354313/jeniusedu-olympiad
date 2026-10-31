@@ -1,5 +1,5 @@
 import {getClient} from './participant-client.js';
-import {escapeHtml as esc,rpc,when} from './competition-service.js?v=3';
+import {escapeHtml as esc,rpc,when} from './competition-service.js?v=4';
 const root=document.querySelector('#joParticipantCard');
 try{
  const id=new URLSearchParams(location.search).get('registration');

@@ -1,5 +1,5 @@
 import {getClient} from './participant-client.js';
-import {escapeHtml as esc,competitionCard,when,rpc} from './competition-service.js?v=3';
+import {escapeHtml as esc,competitionCard,when,rpc} from './competition-service.js?v=4';
 if(document.readyState==='loading')await new Promise(r=>document.addEventListener('DOMContentLoaded',r,{once:true}));
 const page=document.body.dataset.page;
 if(['home','kompetisi','jadwal','pengumuman'].includes(page)){
