@@ -1,5 +1,5 @@
 import {getClient} from './participant-client.js';
-import {escapeHtml as esc,rpc,richHtml} from './competition-service.js?v=2';
+import {escapeHtml as esc,rpc,richHtml} from './competition-service.js?v=3';
 import {storeDraft,recoverDraft,clearDraft} from './competition-drafts.js?v=1';
 const root=document.querySelector('#joExam'),id=new URLSearchParams(location.search).get('competition');
 let client,userId,state,offset=0,queue=[],pendingRecovery=[],saving=false,failed=false,conflict=false,submitting=false,secondsTimer,poll,storageWarning=false;

@@ -1,5 +1,5 @@
 import {clearUserDrafts} from './competition-drafts.js?v=1';
-import {mountCompetitionAccount} from './competition-account.js?v=2';
+import {mountCompetitionAccount} from './competition-account.js?v=3';
 
 import {getClient,callbackUrl,message} from './participant-client.js';
 const root=document.querySelector('#accountContent'),mode=document.body.dataset.account;
@@ -23,13 +23,14 @@ const panelRoot=document.createElement('section');panelRoot.id='competitionArea'
 const arenaIcon='<svg class="participant-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 3h10v8a5 5 0 0 1-10 0V3ZM7 5H4v4a4 4 0 0 0 4 4m9-8h3v4a4 4 0 0 1-4 4M12 16v5m-4 0h8"/></svg>';
 const journey='<ol class="arena-journey" aria-label="Alur mengikuti kompetisi">'+['Lengkapi profil','Pilih kompetisi','Ikuti ketentuan pendaftaran','Ikuti ujian','Pantau hasil'].map((title,i)=>'<li><span>'+String(i+1).padStart(2,'0')+'</span><strong>'+title+'</strong></li>').join('')+'</ol>';
 const panelInfo={
+tickets:['Kartu Peserta','Identitas keikutsertaan','Kartu belum tersedia','Kartu dapat dicetak setelah pendaftaran aktif.','Kompetisi Saya','peserta.html#kompetisi-saya'],
 my:['Kompetisi Saya','Pusat perjalanan kompetisimu','Data kompetisi belum terhubung','Pendaftaran dan status keikutsertaan akan ditampilkan setelah layanan kompetisi terhubung. Membuat akun belum berarti terdaftar dalam lomba.','Jelajahi Kompetisi','kompetisi.html'],
 schedule:['Jadwal & Ujian','Siap saat tantangan dimulai','Belum ada sesi ujian tersedia','Jadwal dan akses ruang ujian akan mengikuti kompetisi yang kamu ikuti. Saat ini belum ada sesi yang dapat dimulai dari akun ini.','Lihat Jadwal Publik','jadwal.html'],
 awards:['Hasil & Penghargaan','Apresiasi untuk setiap perjuangan','Belum ada hasil yang tersedia','Nilai, peringkat, dan sertifikat akan ditampilkan setelah penilaian serta pengumuman resmi. Ketentuan penghargaan mengikuti panduan setiap lomba.','Baca Ketentuan','panduan.html'],
 announcements:['Pengumuman','Informasi resmi untuk peserta','Pantau informasi penyelenggara','Pembukaan pendaftaran, perubahan jadwal, dan pengumuman hasil tersedia pada halaman pengumuman publik. Notifikasi khusus akun belum terhubung.','Buka Pengumuman','pengumuman.html']};
 const dashboardIntro=document.createElement('section');dashboardIntro.className='arena-dashboard-guide';dashboardIntro.innerHTML='<div><span class="arena-kicker">PERJALANAN KOMPETISI</span><h2>Persiapan yang baik dimulai dari sini.</h2><p>Lengkapi profilmu sambil menunggu kompetisi resmi dibuka.</p></div>'+journey+'<a class="participant-button" href="#profil" data-open-profile>Lengkapi Profil →</a>';root.insertBefore(dashboardIntro,document.querySelector('#dashboardPanels'));
 dashboardIntro.querySelector('[data-open-profile]').addEventListener('click',e=>{e.preventDefault();navigate('profile')});
-const hashes={catalogue:'kompetisi',dashboard:'dashboard',my:'kompetisi-saya',schedule:'jadwal',awards:'hasil',announcements:'pengumuman',profile:'profil'};
+const hashes={catalogue:'kompetisi',dashboard:'dashboard',my:'kompetisi-saya',schedule:'jadwal',awards:'hasil',announcements:'pengumuman',tickets:'kartu-peserta',profile:'profil'};
 function navigate(panel,updateHash=true){
  if(panel!=='catalogue'&&panel!=='dashboard'&&panel!=='profile'&&!panelInfo[panel])panel='dashboard';
  document.querySelectorAll('[data-panel]').forEach(link=>{const selected=link.dataset.panel===panel;link.classList.toggle('is-active',selected);if(selected)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current')});
