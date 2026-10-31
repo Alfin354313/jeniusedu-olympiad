@@ -1,0 +1,7 @@
+export const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const money=v=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(v||0));
+export const when=v=>v?new Date(v).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',dateStyle:'medium',timeStyle:'short'})+' WIB':'—';
+export async function rpc(client,name,args={}){const {data,error}=await client.rpc(name,args);if(error)throw Error(/PGRST202|42P01|schema cache/.test(error.code+' '+error.message)?'Layanan kompetisi belum diaktifkan. Hubungi pengelola.':error.message);return data;}
+export const registrationStatus=r=>({pending:'Menunggu pembayaran',review:'Menunggu verifikasi',approved:'Aktif',rejected:'Bukti ditolak'})[r.status]||r.status;
+export const registrationOpen=c=>c.published&&Date.now()>=Date.parse(c.registration_opens)&&Date.now()<Date.parse(c.registration_closes);
+export function competitionCard(c,action){return '<article class="jo-card"><div class="jo-card-tags"><span>'+escapeHtml(c.level)+'</span><span>'+escapeHtml(c.subject)+'</span></div><h2>'+escapeHtml(c.title)+'</h2><p class="jo-description">'+escapeHtml(c.description)+'</p><dl><div><dt>Pendaftaran</dt><dd>'+when(c.registration_opens)+' – '+when(c.registration_closes)+'</dd></div><div><dt>Ujian</dt><dd>'+when(c.starts_at)+' – '+when(c.ends_at)+'</dd></div><div><dt>Durasi</dt><dd>'+escapeHtml(c.duration_minutes)+' menit</dd></div><div><dt>Biaya</dt><dd>'+money(c.fee)+'</dd></div></dl>'+action+'</article>';}
