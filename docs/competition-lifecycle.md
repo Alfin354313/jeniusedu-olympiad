@@ -2,6 +2,8 @@
 
 This branch connects published competitions, registration, manual payment, a single official MCQ exam per competition, released results and manager-issued certificates. The existing red photo banner, login and profile editor remain in place. Not merged or activated in production by the implementation agent.
 
+For the latest bank/recovery/monitoring extension, also read `docs/competition-upgrade.md` and apply its incremental SQL after the original activation below.
+
 ## Activate once
 
 1. Back up the target Supabase project and review the SQL. The active public `https://jeniusedu-olympiad.vercel.app/api/auth-config` currently names `https://emcchkpdgwkjovdylcth.supabase.co`, the same project as Panel. Do not move databases or keys. Run `20261028_participant_profiles.sql` if absent, then `20261031_competition_lifecycle.sql`. The companion Panel file `supabase/olympiad_lifecycle.sql` includes both. Migration reruns retain data and do not seed competitions, questions, payments or certificates.
@@ -18,10 +20,10 @@ This branch connects published competitions, registration, manual payment, a sin
 - Private proof bucket accepts new JPG/PNG/WebP up to 3 MB under own user/registration paths. Managers view short-lived signed URLs. An uploaded proof alone never enables exam access. Failed proof submissions may leave an unused private image; there is no background cleanup job.
 - One immutable attempt snapshot per registration; key/snapshot tables cannot be selected directly by participants. All authoritative timing, access checks, answer validation and grading occur in security-definer RPCs with fixed search paths and explicit auth. Revisions prevent stale overwrites; the UI detects conflicting sessions. Use one device/tab per exam.
 - Equal-weight score is 0–100. Deadline closes the attempt on the next server call, including get; publishing results also finalizes remaining attempts. There is no always-running database scheduler. Client polling and server cutoff enforce the deadline on every call.
-- Disconnections retain pending answers in the current page and show retry; unsent answers do not survive a browser refresh. The browser warns before leaving with unsaved answers. No claim of offline persistence or complete cheating prevention. Visibility changes are logged as counts, without automatic penalties.
+- Disconnections retain pending answers in the current page and show retry; the latest recovery extension can restore unsent choices after refresh in the same browser, with an explicit user choice. The browser warns before leaving with unsaved answers. No claim of offline persistence or complete cheating prevention. Visibility changes are logged as counts, without automatic penalties.
 - Results stay hidden until the manager publishes after the entire competition ends. Each participant sees their own score and dense rank; tied scores share a rank. Other participants' names/answers are not exposed through participant APIs.
 - Certificates require approved registration, submitted attempt and released results. The manager chooses the award; the system does not invent medals. Public verification requires an unguessable certificate UUID, returns certificate name/event/award/date, and displays revocation. Browser Print / Save PDF is supported; no digital signature or government accreditation is implied.
-- New question authoring is text MCQ; this does not reuse the Bimbel Word/PDF/image importer. Multi-round qualification, capacity quotas, refunds and custom medal rules are not automated.
+- The latest extension reuses the Panel Guru Word/PDF/image importer and adds separate image editors for MCQ authoring. Multi-round qualification, capacity quotas, refunds and custom medal rules are not automated.
 
 ## Verification evidence and limits
 

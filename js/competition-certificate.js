@@ -1,5 +1,5 @@
 import {getClient} from './participant-client.js';
-import {escapeHtml as esc,rpc,when} from './competition-service.js';
+import {escapeHtml as esc,rpc,when} from './competition-service.js?v=2';
 const root=document.querySelector('#joCertificate');
 try{const id=new URLSearchParams(location.search).get('code');if(!/^[0-9a-f-]{36}$/i.test(id||''))throw Error('Kode sertifikat tidak valid.');const data=await rpc(await getClient(),'jo_verify_certificate',{p_code:id});if(!data)throw Error('Sertifikat tidak ditemukan.');if(data.revoked)throw Error('Sertifikat ini telah dicabut oleh pengelola.');root.innerHTML='<div class="jo-print-tools"><a href="peserta.html#hasil">← Akun Peserta</a><button id="printCertificate">Cetak / Simpan PDF</button></div><article class="jo-certificate"><img src="assets/logo.png" alt="Jenius Edu" width="72" height="72"><span>JENIUS OLYMPIAD</span><h1>Sertifikat Penghargaan</h1><p>Diberikan kepada</p><h2>'+esc(data.participant_name)+'</h2><p class="jo-award">'+esc(data.award)+'</p><h3>'+esc(data.competition_title)+'</h3><p>Diterbitkan '+when(data.issued_at)+'</p><p class="jo-certificate-code">Kode verifikasi: '+esc(data.id)+'</p><a href="'+esc(location.origin+'/sertifikat.html?code='+data.id)+'">Verifikasi sertifikat ini</a></article>';root.querySelector('#printCertificate').onclick=()=>window.print();}
 catch(e){root.textContent=e.message;}

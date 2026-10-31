@@ -1,4 +1,5 @@
-import {mountCompetitionAccount} from './competition-account.js';
+import {clearUserDrafts} from './competition-drafts.js?v=1';
+import {mountCompetitionAccount} from './competition-account.js?v=2';
 
 import {getClient,callbackUrl,message} from './participant-client.js';
 const root=document.querySelector('#accountContent'),mode=document.body.dataset.account;
@@ -45,8 +46,8 @@ document.querySelector('#name').value=profile?.full_name||user.user_metadata?.fu
 document.querySelector('#profileForm').addEventListener('submit',async e=>{e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;try{const {error}=await c.from('olympiad_participant_profiles').upsert({id:user.id,full_name:document.querySelector('#name').value.trim(),school_level:document.querySelector('#level').value},{onConflict:'id'});if(error)throw Error('Profil belum tersimpan. Periksa koneksi atau hubungi pengelola.');showStatus('Profil peserta berhasil disimpan.')}catch(err){showStatus(message(err))}finally{b.disabled=false}});
 const profileShortcut=document.querySelector('#participantProfileShortcut');if(profileShortcut)profileShortcut.addEventListener('click',()=>document.querySelector('[data-panel="profile"]')?.click());
 const notificationButton=document.querySelector('#participantNotifications'),notificationPanel=document.querySelector('#participantNotificationPanel');if(notificationButton&&notificationPanel){notificationButton.addEventListener('click',()=>{notificationPanel.hidden=!notificationPanel.hidden;notificationButton.setAttribute('aria-expanded',String(!notificationPanel.hidden))});document.addEventListener('click',event=>{if(!notificationButton.contains(event.target)&&!notificationPanel.contains(event.target)){notificationPanel.hidden=true;notificationButton.setAttribute('aria-expanded','false')}})}
-document.querySelector('#signOut').addEventListener('click',async()=>{const {error}=await c.auth.signOut();if(error){showStatus(message(error));return}location.replace('login.html')});
-c.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')location.replace('login.html')});
+document.querySelector('#signOut').addEventListener('click',async()=>{const {error}=await c.auth.signOut();if(error){showStatus(message(error));return}try{clearUserDrafts(window.localStorage,user.id);}catch{}location.replace('login.html')});
+c.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){try{clearUserDrafts(window.localStorage,user.id);}catch{}location.replace('login.html')}});
 competitionLifecycle=await mountCompetitionAccount({client:c,user,root,panelRoot,navigate});
 if(sessionStorage.getItem('joCompetitionIntent')&&!location.hash)navigate('catalogue');else restorePanel();
 }catch(e){render('Layanan akun belum tersedia','<p>Konfigurasi autentikasi perlu dilengkapi oleh pengelola.</p><a href="login.html">Kembali ke Masuk</a>');showStatus(message(e))}})();

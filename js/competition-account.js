@@ -1,4 +1,4 @@
-import {escapeHtml as esc,money,when,rpc,registrationStatus,registrationOpen,competitionCard} from './competition-service.js';
+import {escapeHtml as esc,money,when,rpc,registrationStatus,registrationOpen,competitionCard} from './competition-service.js?v=2';
 export async function mountCompetitionAccount({client,user,root,panelRoot,navigate}){
  let data={registrations:[],payment:{}},competitions=[],panel='dashboard',busy=false,request=0,ready=false;
  const button=(name,text,extra='')=>'<button type="button" class="participant-button" data-jo="'+name+'" '+extra+'>'+text+'</button>';
