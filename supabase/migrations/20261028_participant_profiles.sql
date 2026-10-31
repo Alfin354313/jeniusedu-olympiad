@@ -14,3 +14,4 @@ drop policy if exists participant_insert_self on public.olympiad_participant_pro
 create policy participant_insert_self on public.olympiad_participant_profiles for insert to authenticated with check ((select auth.uid())=id);
 drop policy if exists participant_update_self on public.olympiad_participant_profiles;
 create policy participant_update_self on public.olympiad_participant_profiles for update to authenticated using ((select auth.uid())=id) with check ((select auth.uid())=id);
+

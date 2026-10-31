@@ -1,0 +1,9 @@
+import {getClient} from './participant-client.js';
+import {escapeHtml as esc,rpc,when} from './competition-service.js?v=4';
+const root=document.querySelector('#joParticipantCard');
+try{
+ const id=new URLSearchParams(location.search).get('registration');
+ if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id||''))throw Error('Nomor pendaftaran tidak valid.');
+ const client=await getClient(),{data,error}=await client.auth.getUser();if(error||!data.user){root.innerHTML='<h1>Masuk untuk membuka kartu</h1><p>Kartu peserta hanya tersedia melalui akun pemilik pendaftaran.</p><a href="peserta.html#kartu-peserta">Masuk ke Akun Peserta</a>';}
+ else{const card=await rpc(client,'jo_participant_card',{p_registration:id});root.innerHTML='<div class="jo-print-tools"><a href="peserta.html#kartu-peserta">← Akun Peserta</a><button id="printCard">Cetak / Simpan PDF</button></div><article class="jo-participant-card"><header><img src="assets/logo.png" width="64" height="64" alt="Jenius Edu"><div><strong>JENIUS OLYMPIAD</strong><p>Kartu Peserta</p></div><span>AKTIF</span></header><div class="jo-ticket-number">'+esc(card.participant_no)+'</div><h1>'+esc(card.participant_name)+'</h1><dl>'+[['Kompetisi',card.competition_title],['Jenjang / Bidang',card.school_level+' / '+card.subject],['Tahap',({single:'Satu tahap',preliminary:'Penyisihan',final:'Final'})[card.round_kind]||'Satu tahap'],['Mulai',when(card.starts_at)],['Selesai',when(card.ends_at)],['Durasi',card.duration_minutes+' menit']].map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+esc(value)+'</dd></div>').join('')+'</dl><footer>Periksa jadwal terbaru melalui akun peserta. Kartu ini menunjukkan keikutsertaan, bukan sertifikat penghargaan.</footer></article>';root.querySelector('#printCard').onclick=()=>window.print();}
+}catch(e){root.textContent=e.message;}
